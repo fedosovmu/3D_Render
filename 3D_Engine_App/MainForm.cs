@@ -19,6 +19,7 @@ namespace _3D_Engine_App
 
         Bitmap Btm;
         Graphics G;
+        GraphicEngine GraphicEngine;
 
 
 
@@ -34,18 +35,32 @@ namespace _3D_Engine_App
             G.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             this.BackgroundImage = Btm;
             this.DoubleBuffered = true;
+
+            MainTimer.Interval = 10;
         }
 
 
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            var graphicEngine = new GraphicEngine(G);
+            GraphicEngine = new GraphicEngine(G);
+            MainTimer.Start();
+        }
 
+
+
+        int tickNumber = 0;
+        private void MainTimer_Tick(object sender, EventArgs e)
+        {
+            tickNumber++;
             var cube = Mesh.GetCube();
-            graphicEngine.Render(cube);
 
+            var angle = Math.PI / 100 * tickNumber;
+            cube.RotateX(angle / 7);
+            cube.RotateY(angle);
+            cube.RotateZ(angle / 19);
 
+            GraphicEngine.Render(cube);
             this.Refresh();
         }
     }

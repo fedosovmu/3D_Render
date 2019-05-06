@@ -51,8 +51,11 @@ namespace _3D_Engine_App
 
         private Point2D ProjectPoint (Point3D point)
         {
-            int x = (int)point.X + ScreenCenterX;
-            int y = (int)point.Y + ScreenCenterY;
+            var distance = 1;
+            int x = (int)(point.X / (distance - point.Z / 300));
+            int y = (int)(point.Y / (distance - point.Z / 300));
+            x += ScreenCenterX;
+            y += ScreenCenterY;
             return new Point2D(x, y);
         }
 
@@ -71,13 +74,6 @@ namespace _3D_Engine_App
         private void DrawMesh(Mesh mesh)
         {
             mesh = mesh.Copy();
-            //mesh.RotateZ(Math.PI / 20);
-            //mesh.RotateY(Math.PI / 12);
-            //mesh.RotateX(Math.PI / 12);
-            var angle = Math.PI / 6;
-            mesh.RotateX(angle);
-            mesh.RotateY(angle);
-            mesh.RotateZ(angle);
 
             var projection = new Point2D[mesh.Points.Length];
 
@@ -92,6 +88,7 @@ namespace _3D_Engine_App
                 DrawPoint(projection[i]);
             }
 
+            // Connect lines
             var linesCount = mesh.Lines.GetLength(0);
             for (int i = 0; i < linesCount; i++)
             {
