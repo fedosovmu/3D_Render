@@ -51,7 +51,7 @@ namespace _3D_Engine_App
 
         private Point2D ProjectPoint (Point3D point)
         {
-            const int distanceToScreen = 200;
+            const int distanceToScreen = 400;
             const int cameraPositionZ = -200;
             double distanceZ = point.Z - cameraPositionZ;
 
