@@ -51,9 +51,12 @@ namespace _3D_Engine_App
 
         private Point2D ProjectPoint (Point3D point)
         {
-            var distance = 1;
-            int x = (int)(point.X / (distance - point.Z / 300));
-            int y = (int)(point.Y / (distance - point.Z / 300));
+            const int distanceToScreen = 200;
+            const int cameraPositionZ = -200;
+            double distanceZ = point.Z - cameraPositionZ;
+
+            int x = (int)(point.X * distanceToScreen / distanceZ);
+            int y = (int)(point.Y * distanceToScreen / distanceZ);
             x += ScreenCenterX;
             y += ScreenCenterY;
             return new Point2D(x, y);
